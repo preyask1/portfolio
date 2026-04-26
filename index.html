@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preyas Kulshrestha — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2;
+    --warm-white: #FFFFFF;
+    --ink: #1A1714;
+    --ink-soft: #3D3830;
+    --ink-muted: #6B6358;
+    --accent: #C4622D;
+    --accent-light: #E8A882;
+    --accent-pale: #F5E8DF;
+    --teal: #2D6B6B;
+    --teal-light: #E0EFEF;
+    --border: #E4DDD4;
+    --shadow: 0 2px 20px rgba(26,23,20,0.08);
+    --shadow-lg: 0 8px 40px rgba(26,23,20,0.12);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); line-height: 1.6; overflow-x: hidden; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250,247,242,0.95); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 48px; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 500; color: var(--ink); letter-spacing: -0.02em; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-muted); text-decoration: none; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--ink); border-radius: 2px; }
+  .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; background: var(--cream); border-bottom: 1px solid var(--border); padding: 8px 24px; z-index: 99; flex-direction: column; }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-size: 14px; letter-spacing: 0.04em; color: var(--ink-muted); text-decoration: none; text-transform: uppercase; padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .mobile-menu a:last-child { border-bottom: none; }
+
+  .hero { min-height: 100vh; padding: 120px 48px 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; max-width: 1200px; margin: 0 auto; }
+  .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 24px; opacity: 0; animation: fadeUp 0.6s 0.2s forwards; }
+  .hero-name { font-family: 'Playfair Display', serif; font-size: clamp(40px, 6vw, 80px); font-weight: 700; line-height: 1.05; letter-spacing: -0.03em; color: var(--ink); margin-bottom: 8px; opacity: 0; animation: fadeUp 0.6s 0.35s forwards; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(16px, 2.5vw, 28px); font-weight: 400; font-style: italic; color: var(--accent); margin-bottom: 32px; opacity: 0; animation: fadeUp 0.6s 0.5s forwards; }
+  .hero-desc { font-size: 16px; font-weight: 300; color: var(--ink-soft); line-height: 1.8; max-width: 480px; margin-bottom: 40px; opacity: 0; animation: fadeUp 0.6s 0.65s forwards; }
+  .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.6s 0.8s forwards; }
+  .btn-primary { background: var(--accent); color: white; padding: 14px 28px; border-radius: 4px; font-size: 14px; font-weight: 500; text-decoration: none; letter-spacing: 0.02em; transition: all 0.2s; border: 1.5px solid var(--accent); }
+  .btn-primary:hover { background: var(--ink); border-color: var(--ink); transform: translateY(-1px); }
+  .btn-secondary { background: transparent; color: var(--ink); padding: 14px 28px; border-radius: 4px; font-size: 14px; font-weight: 500; text-decoration: none; letter-spacing: 0.02em; transition: all 0.2s; border: 1.5px solid var(--border); }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+  .hero-right { opacity: 0; animation: fadeIn 0.8s 0.5s forwards; }
+  .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .stat-card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 8px; padding: 24px; transition: all 0.25s; }
+  .stat-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+  .stat-card:nth-child(1) { border-top: 3px solid var(--accent); }
+  .stat-card:nth-child(2) { border-top: 3px solid var(--teal); }
+  .stat-card:nth-child(3) { border-top: 3px solid var(--accent-light); }
+  .stat-card:nth-child(4) { border-top: 3px solid var(--ink-muted); }
+  .stat-number { font-family: 'Playfair Display', serif; font-size: clamp(26px, 4vw, 36px); font-weight: 700; color: var(--ink); letter-spacing: -0.02em; line-height: 1; margin-bottom: 6px; }
+  .stat-label { font-size: 12px; font-weight: 400; color: var(--ink-muted); line-height: 1.4; }
+  .hero-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .badge { background: var(--accent-pale); color: var(--accent); font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.06em; padding: 5px 10px; border-radius: 3px; text-transform: uppercase; }
+
+  section { padding: 80px 48px; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-header { display: flex; align-items: baseline; gap: 20px; margin-bottom: 48px; flex-wrap: wrap; }
+  .section-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 48px); font-weight: 700; letter-spacing: -0.02em; color: var(--ink); line-height: 1.1; }
+  .section-rule { flex: 1; height: 1px; background: var(--border); min-width: 40px; }
+
+  .constellation-section { background: var(--warm-white); }
+  .stat-row { display: flex; gap: 12px; margin-bottom: 28px; flex-wrap: wrap; }
+  .stat-pill { background: var(--cream); border: 1px solid var(--border); border-radius: 20px; padding: 5px 14px; font-size: 12px; color: var(--ink-muted); }
+  .stat-pill strong { color: var(--ink); font-weight: 500; }
+  .domain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(172px, 1fr)); gap: 14px; margin-bottom: 20px; }
+  .domain-card { background: var(--cream); border: 1px solid var(--border); border-radius: 12px; padding: 18px; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; }
+  .domain-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .domain-card.ai::before { background: #1D9E75; }
+  .domain-card.delivery::before { background: #7F77DD; }
+  .domain-card.client::before { background: #C4622D; }
+  .domain-card.ops::before { background: #BA7517; }
+  .domain-card.leadership::before { background: #D4537E; }
+  .domain-card.active, .domain-card:hover { border-color: #B4B2A9; box-shadow: var(--shadow); }
+  .domain-icon { font-size: 16px; margin-bottom: 8px; }
+  .domain-name { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 3px; line-height: 1.3; }
+  .domain-count { font-size: 11px; color: var(--ink-muted); margin-bottom: 10px; }
+  .node-list { display: flex; flex-wrap: wrap; gap: 5px; }
+  .node { font-size: 10px; padding: 3px 7px; border-radius: 20px; border: 1px solid; }
+  .node.ai { background: #E1F5EE; color: #0F6E56; border-color: #5DCAA5; }
+  .node.delivery { background: #EEEDFE; color: #3C3489; border-color: #AFA9EC; }
+  .node.client { background: #FAECE7; color: #993C1D; border-color: #F0997B; }
+  .node.ops { background: #FAEEDA; color: #854F0B; border-color: #EF9F27; }
+  .node.leadership { background: #FBEAF0; color: #72243E; border-color: #ED93B1; }
+  .detail-panel { background: var(--cream); border: 1px solid var(--border); border-radius: 12px; padding: 24px; min-height: 80px; }
+  .detail-panel h3 { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+  .detail-subtitle { font-size: 12px; color: var(--ink-muted); margin-bottom: 16px; }
+  .detail-nodes { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .detail-items { display: flex; flex-direction: column; gap: 12px; }
+  .detail-item { display: flex; align-items: flex-start; gap: 10px; }
+  .detail-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+  .detail-dot.ai { background: #1D9E75; }
+  .detail-dot.delivery { background: #7F77DD; }
+  .detail-dot.client { background: #C4622D; }
+  .detail-dot.ops { background: #BA7517; }
+  .detail-dot.leadership { background: #D4537E; }
+  .detail-text { font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+  .detail-meta { font-size: 11px; color: var(--ink-muted); margin-top: 2px; }
+  .detail-placeholder { font-size: 13px; color: var(--ink-muted); text-align: center; padding: 20px 0; }
+
+  .skills-section { background: var(--cream); }
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .skill-group { background: var(--warm-white); border: 1px solid var(--border); border-radius: 8px; padding: 28px; transition: all 0.25s; }
+  .skill-group:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+  .skill-group-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 16px; }
+  .icon-orange { background: var(--accent-pale); }
+  .icon-teal { background: var(--teal-light); }
+  .icon-ink { background: #EEEAE4; }
+  .skill-group-title { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 500; color: var(--ink); margin-bottom: 16px; }
+  .skill-list { list-style: none; }
+  .skill-list li { font-size: 13px; color: var(--ink-soft); font-weight: 300; padding: 6px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  .skill-list li:last-child { border-bottom: none; }
+  .skill-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent-light); flex-shrink: 0; }
+
+  .ai-section { background: var(--ink); }
+  .ai-intro { font-size: 16px; color: rgba(250,247,242,0.65); font-weight: 300; line-height: 1.8; max-width: 640px; margin-bottom: 48px; }
+  .ai-tools-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 48px; }
+  .ai-tool-card { border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 20px; transition: all 0.25s; background: rgba(255,255,255,0.03); }
+  .ai-tool-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(196,98,45,0.4); transform: translateY(-2px); }
+  .ai-tool-name { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent-light); letter-spacing: 0.04em; margin-bottom: 8px; }
+  .ai-tool-desc { font-size: 12px; color: rgba(250,247,242,0.5); line-height: 1.6; font-weight: 300; }
+  .ai-outcomes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .ai-outcome { border-left: 2px solid var(--accent); padding-left: 16px; }
+  .ai-outcome-metric { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--cream); line-height: 1; margin-bottom: 4px; }
+  .ai-outcome-label { font-size: 12px; color: rgba(250,247,242,0.5); font-weight: 300; line-height: 1.4; }
+
+  .projects-section { background: var(--cream); }
+  .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .project-card { background: var(--warm-white); border: 1px solid var(--border); border-radius: 8px; padding: 32px; transition: all 0.25s; position: relative; overflow: hidden; }
+  .project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .project-card.orange::before { background: var(--accent); }
+  .project-card.teal::before { background: var(--teal); }
+  .project-card.warm::before { background: var(--accent-light); }
+  .project-card.dark::before { background: var(--ink-muted); }
+  .project-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
+  .project-tag { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase; margin-bottom: 12px; display: block; }
+  .project-name { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 500; color: var(--ink); margin-bottom: 12px; line-height: 1.3; }
+  .project-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.75; font-weight: 300; margin-bottom: 20px; }
+  .project-impact { background: var(--accent-pale); border-radius: 4px; padding: 10px 14px; font-size: 13px; color: var(--accent); font-weight: 500; }
+  .project-impact.teal-bg { background: var(--teal-light); color: var(--teal); }
+
+  .contact-section { background: var(--warm-white); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .contact-intro { font-family: 'Playfair Display', serif; font-size: clamp(20px, 3vw, 28px); font-weight: 400; color: var(--ink); line-height: 1.4; margin-bottom: 24px; }
+  .contact-desc { font-size: 15px; color: var(--ink-soft); line-height: 1.8; font-weight: 300; margin-bottom: 32px; }
+  .contact-items { display: flex; flex-direction: column; gap: 12px; }
+  .contact-item { display: flex; align-items: center; gap: 16px; padding: 14px 18px; border: 1px solid var(--border); border-radius: 6px; text-decoration: none; transition: all 0.2s; }
+  .contact-item:hover { border-color: var(--accent); background: var(--accent-pale); transform: translateX(4px); }
+  .contact-item-icon { width: 36px; height: 36px; background: var(--accent-pale); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .contact-item-label { font-size: 11px; letter-spacing: 0.06em; color: var(--ink-muted); text-transform: uppercase; font-family: 'DM Mono', monospace; margin-bottom: 2px; }
+  .contact-item-value { font-size: 14px; color: var(--ink); font-weight: 400; }
+  .availability-block { background: var(--accent-pale); border-radius: 8px; padding: 28px; margin-top: 28px; }
+  .availability-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
+  .availability-text { font-size: 14px; color: var(--ink-soft); line-height: 1.7; font-weight: 300; }
+  .availability-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #2E9E6B; margin-right: 8px; animation: pulse 2s infinite; }
+
+  footer { background: var(--ink); padding: 28px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .footer-name { font-family: 'Playfair Display', serif; font-size: 16px; color: var(--cream); }
+  .footer-note { font-size: 12px; color: rgba(250,247,242,0.35); font-family: 'DM Mono', monospace; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    .hero { grid-template-columns: 1fr; padding: 96px 24px 56px; gap: 40px; min-height: auto; }
+    .hero-right { order: -1; }
+    .stats-grid { gap: 12px; }
+    .stat-card { padding: 16px; }
+    section { padding: 56px 24px; }
+    .section-rule { display: none; }
+    .domain-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .skills-grid { grid-template-columns: 1fr; gap: 16px; }
+    .ai-tools-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .ai-outcomes { grid-template-columns: 1fr; gap: 16px; }
+    .projects-grid { grid-template-columns: 1fr; gap: 16px; }
+    .project-card { padding: 24px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    footer { padding: 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-ctas { flex-direction: column; }
+    .btn-primary, .btn-secondary { text-align: center; }
+    .domain-grid { grid-template-columns: 1fr; }
+    .ai-tools-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .stat-row { flex-direction: column; gap: 8px; }
+  }
+
+  /* DARK MODE TOGGLE BUTTON */
+  .theme-toggle {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: transparent; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; transition: all 0.2s;
+    flex-shrink: 0; margin-left: 16px;
+    color: var(--ink-muted);
+  }
+  .theme-toggle:hover { border-color: var(--accent); color: var(--accent); transform: rotate(20deg); }
+
+  /* DARK MODE VARIABLES */
+  [data-theme="dark"] {
+    --cream: #141210;
+    --warm-white: #1E1A17;
+    --ink: #F0EBE3;
+    --ink-soft: #C8BFB4;
+    --ink-muted: #8C8078;
+    --accent: #E07848;
+    --accent-light: #C4622D;
+    --accent-pale: #2A1A0F;
+    --teal: #4A9B9B;
+    --teal-light: #0F2424;
+    --border: #2E2824;
+    --shadow: 0 2px 20px rgba(0,0,0,0.3);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.4);
+  }
+
+  /* DARK MODE SPECIFIC OVERRIDES */
+  [data-theme="dark"] nav { background: rgba(20,18,16,0.95); }
+  [data-theme="dark"] .mobile-menu { background: var(--cream); }
+  [data-theme="dark"] body { background: var(--cream); }
+
+  [data-theme="dark"] .stat-card { background: var(--warm-white); }
+  [data-theme="dark"] .skill-group { background: var(--warm-white); }
+  [data-theme="dark"] .project-card { background: var(--warm-white); }
+  [data-theme="dark"] .contact-section { background: var(--warm-white); }
+  [data-theme="dark"] .experience-section { background: var(--warm-white); }
+  [data-theme="dark"] .constellation-section { background: var(--warm-white); }
+
+  [data-theme="dark"] .domain-card { background: #1A1612; }
+  [data-theme="dark"] .detail-panel { background: #1A1612; }
+  [data-theme="dark"] .stat-pill { background: #1A1612; }
+
+  [data-theme="dark"] .btn-secondary { color: var(--ink); border-color: var(--border); }
+  [data-theme="dark"] .btn-primary:hover { background: var(--ink); border-color: var(--ink); color: var(--cream); }
+
+  [data-theme="dark"] .nav-hamburger span { background: var(--ink); }
+
+  [data-theme="dark"] .node.ai { background: #0A2419; color: #5DCAA5; border-color: #1D6B4A; }
+  [data-theme="dark"] .node.delivery { background: #1A1830; color: #AFA9EC; border-color: #534AB7; }
+  [data-theme="dark"] .node.client { background: #2A1208; color: #E8A882; border-color: #C4622D; }
+  [data-theme="dark"] .node.ops { background: #231800; color: #EF9F27; border-color: #854F0B; }
+  [data-theme="dark"] .node.leadership { background: #250D18; color: #ED93B1; border-color: #993556; }
+
+  [data-theme="dark"] .availability-block { background: var(--accent-pale); }
+  [data-theme="dark"] .contact-item:hover { background: var(--accent-pale); }
+  [data-theme="dark"] .contact-item-icon { background: var(--accent-pale); }
+
+  [data-theme="dark"] .ai-section { background: #0D0B09; }
+  [data-theme="dark"] .ai-tool-card { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08); }
+  [data-theme="dark"] .ai-tool-card:hover { background: rgba(255,255,255,0.08); }
+
+  [data-theme="dark"] .projects-section { background: var(--cream); }
+  [data-theme="dark"] .skills-section { background: var(--cream); }
+
+  /* SMOOTH TRANSITION ON THEME CHANGE */
+  body, nav, section, .stat-card, .skill-group, .project-card, .domain-card,
+  .detail-panel, .contact-item, .availability-block, .ai-tool-card, footer {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Preyas Kulshrestha</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#ai-tools">AI Tools</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div style="display:flex;align-items:center;gap:8px;">
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark mode">☀️</button>
+    <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#expertise" onclick="closeMenu()">Expertise</a>
+  <a href="#skills" onclick="closeMenu()">Skills</a>
+  <a href="#ai-tools" onclick="closeMenu()">AI Tools</a>
+  <a href="#projects" onclick="closeMenu()">Projects</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<section id="about" style="padding-top:0; background: var(--cream);">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Technical Program Manager · AI Delivery Leader</div>
+      <h1 class="hero-name">Preyas<br>Kulshrestha</h1>
+      <div class="hero-title">11 Years. Three Continents. One Differentiator.</div>
+      <p class="hero-desc">I build the systems that make programs manageable — then automate those systems using AI. From greenfield ERP implementations to Agentic AI delivery for global enterprise clients, I close the gap between strategic intent and executed outcomes.</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn-primary">Get in touch</a>
+        <a href="#expertise" class="btn-secondary">View expertise</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-number">11</div><div class="stat-label">Years of program delivery experience</div></div>
+        <div class="stat-card"><div class="stat-number">$10M+</div><div class="stat-label">SaaS portfolio managed globally</div></div>
+        <div class="stat-card"><div class="stat-number">95%</div><div class="stat-label">On-schedule delivery rate across all programs</div></div>
+        <div class="stat-card"><div class="stat-number">30%+</div><div class="stat-label">PM capacity reclaimed through AI automation</div></div>
+      </div>
+      <div class="hero-badges">
+        <span class="badge">EMEA</span><span class="badge">APAC</span><span class="badge">North America</span>
+        <span class="badge">CSM</span><span class="badge">ITIL v4</span><span class="badge">AI Hackathon Winner</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="expertise" class="constellation-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-label">Career</span>
+      <h2 class="section-title">Expertise</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="stat-row reveal">
+      <div class="stat-pill"><strong>11 years</strong> across 3 organisations</div>
+      <div class="stat-pill"><strong>5 domains</strong> of expertise</div>
+      <div class="stat-pill"><strong>39 capabilities</strong> mapped</div>
+    </div>
+    <div class="domain-grid reveal" id="domainGrid"></div>
+    <div class="detail-panel reveal" id="detailPanel">
+      <p class="detail-placeholder">Select a domain above to explore capabilities</p>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="skills-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-label">Capabilities</span>
+      <h2 class="section-title">Skills</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group reveal">
+        <div class="skill-group-icon icon-orange">🎯</div>
+        <div class="skill-group-title">Program & Delivery</div>
+        <ul class="skill-list">
+          <li>0-to-1 Program Delivery</li><li>OKR Alignment (L1–L3)</li>
+          <li>Agile / Scrum / SAFe / Kanban</li><li>CPM & Timeline Modelling</li>
+          <li>RACI Framework Design</li><li>Risk & Dependency Management</li>
+          <li>Budget Governance — sub-5% variance</li><li>Roadmap Coordination — Aha! / Jira</li>
+          <li>Executive Stakeholder Communication</li><li>10 PMs Mentored</li>
+        </ul>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-icon icon-teal">🤖</div>
+        <div class="skill-group-title">AI & Data Delivery</div>
+        <ul class="skill-list">
+          <li>Agentic AI Program Coordination</li><li>LangChain / LangGraph</li>
+          <li>RAG-based Chatbot Delivery</li><li>GenAI Use Case Discovery</li>
+          <li>Azure OpenAI / Azure ML</li><li>Databricks on Azure</li>
+          <li>Predictive ML Governance Models</li><li>Prompt Engineering — Claude, Ollama</li>
+          <li>HITL Reduction & Automation</li><li>AI Scientist & MLE Coordination</li>
+        </ul>
+      </div>
+      <div class="skill-group reveal">
+        <div class="skill-group-icon icon-ink">⚙️</div>
+        <div class="skill-group-title">Operations & Platforms</div>
+        <ul class="skill-list">
+          <li>ERP — Ginesys, SAP, Oracle</li><li>Business Process Re-engineering</li>
+          <li>Supply Chain Optimisation</li><li>Digital Transformation</li>
+          <li>Jira · Confluence · Aha! · MS Project</li><li>Oracle PL/SQL</li>
+          <li>REST APIs / Postman / JSON</li><li>OSTicket — hands-on</li>
+          <li>Lean / JIT Methodologies</li><li>ITIL v4 (Certified)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ai-tools" class="ai-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-label">Toolset</span>
+      <h2 class="section-title" style="color:var(--cream)">AI Tools & Stack</h2>
+      <div class="section-rule" style="background:rgba(255,255,255,0.1)"></div>
+    </div>
+    <p class="ai-intro reveal">I've moved beyond using AI tools to building with them — deploying agent frameworks, RAG pipelines, and predictive models that automate the manual overhead slowing most programs down.</p>
+    <div class="ai-tools-grid reveal">
+      <div class="ai-tool-card"><div class="ai-tool-name">LangChain</div><div class="ai-tool-desc">Agent orchestration for PM workflow automation — eliminating HITL from repetitive delivery tasks</div></div>
+      <div class="ai-tool-card"><div class="ai-tool-name">LangGraph</div><div class="ai-tool-desc">Stateful multi-agent coordination for complex, multi-step program governance pipelines</div></div>
+      <div class="ai-tool-card"><div class="ai-tool-name">Azure OpenAI</div><div class="ai-tool-desc">Enterprise GenAI program delivery — environment setup, deployment sequencing, go-live coordination</div></div>
+      <div class="ai-tool-card"><div class="ai-tool-name">Azure ML</div><div class="ai-tool-desc">ML model deployment coordination — milestone management from data readiness through production</div></div>
+      <div class="ai-tool-card"><div class="ai-tool-name">RAG Pipelines</div><div class="ai-tool-desc">Knowledge management systems consolidating fragmented cross-functional documentation</div></div>
+      <div class="ai-tool-card"><div class="ai-tool-name">Databricks</div><div class="ai-tool-desc">Data pipeline coordination and analytics infrastructure management on Azure</div></div>
+      <div class="ai-tool-card"><div class="ai-tool-name">Claude · Ollama</div><div class="ai-tool-desc">Prompt engineering for PM deliverable automation and knowledge retrieval acceleration</div></div>
+      <div class="ai-tool-card"><div class="ai-tool-name">Predictive ML</div><div class="ai-tool-desc">CPM + ML delay-prediction system — adopted into global PMO as standard risk-mitigation tool</div></div>
+    </div>
+    <div class="ai-outcomes reveal">
+      <div class="ai-outcome"><div class="ai-outcome-metric">30%+</div><div class="ai-outcome-label">PM capacity reclaimed via agent automation</div></div>
+      <div class="ai-outcome"><div class="ai-outcome-metric">&lt;5 min</div><div class="ai-outcome-label">Information retrieval via RAG (was hours)</div></div>
+      <div class="ai-outcome"><div class="ai-outcome-metric">100%</div><div class="ai-outcome-label">On-time delivery visibility via Predictive ML</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="projects-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-label">Highlights</span>
+      <h2 class="section-title">Key Projects</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card orange reveal">
+        <span class="project-tag">Agentic AI · Enterprise Program</span>
+        <div class="project-name">LangChain Agent Automation Framework</div>
+        <p class="project-desc">Architected and deployed AI Agent automation frameworks using LangChain and LangGraph, eliminating human-in-the-loop steps from repetitive PM workflows — converting manual status reporting, risk logging, and stakeholder updates into productized, repeatable operations.</p>
+        <div class="project-impact">30%+ of program delivery capacity reclaimed</div>
+      </div>
+      <div class="project-card teal reveal">
+        <span class="project-tag">RAG · Knowledge Management · Enterprise</span>
+        <div class="project-name">RAG-Based Enterprise Knowledge System</div>
+        <p class="project-desc">Built RAG-based chatbots and knowledge management systems consolidating fragmented cross-functional documentation across distributed implementation teams. Enabled faster, policy-aligned decisions without hunting through siloed repositories.</p>
+        <div class="project-impact teal-bg">Information retrieval: hours → under 5 minutes</div>
+      </div>
+      <div class="project-card warm reveal">
+        <span class="project-tag">ML · Innovation · Hackathon Winner</span>
+        <div class="project-name">CPM + ML Delay Prediction System</div>
+        <p class="project-desc">Engineered a Critical Path Method and Machine Learning delay-prediction system that surfaces delay risks before they impact the critical path. Won an internal AI Hackathon and adopted into the global PMO as a standard risk-mitigation tool in production use.</p>
+        <div class="project-impact">Hackathon Winner — adopted into PMO production</div>
+      </div>
+      <div class="project-card dark reveal">
+        <span class="project-tag">ERP · 0-to-1 · Greenfield Build</span>
+        <div class="project-name">Greenfield ERP & IT Function Build</div>
+        <p class="project-desc">Joined as the organisation's first IT hire. Built the entire IT function from scratch with direct C-suite collaboration. Delivered a full ERP lifecycle — requirements through go-live — with zero unplanned rollbacks. Scaled operational efficiency 150% in 6 months.</p>
+        <div class="project-impact">150% operational efficiency gain · Zero rollbacks</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact-section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-label">Connect</span>
+      <h2 class="section-title">Get in Touch</h2>
+      <div class="section-rule"></div>
+    </div>
+    <div class="contact-grid">
+      <div class="reveal">
+        <p class="contact-intro">Open to the right opportunity — remote, hybrid, or global.</p>
+        <p class="contact-desc">Whether you're looking for an Engagement Manager to lead your GenAI consulting practice, a Technical Program Manager to govern a complex AI program, or a delivery leader who can build the operating system your team is missing — I'd like to hear from you.</p>
+        <div class="availability-block">
+          <div class="availability-label"><span class="availability-dot"></span>Availability</div>
+          <div class="availability-text">Available for remote and hybrid roles. Global collaboration across AMER, EMEA, and APAC. Currently based in Jaipur, India.</div>
+        </div>
+      </div>
+      <div class="contact-items reveal">
+        <a href="mailto:preyas.k1@gmail.com" class="contact-item">
+          <div class="contact-item-icon">✉️</div>
+          <div><div class="contact-item-label">Email</div><div class="contact-item-value">preyas.k1@gmail.com</div></div>
+        </a>
+        <a href="tel:+919569588949" class="contact-item">
+          <div class="contact-item-icon">📱</div>
+          <div><div class="contact-item-label">Phone</div><div class="contact-item-value">+91 956 958 8949</div></div>
+        </a>
+        <a href="https://linkedin.com/in/preyask1" target="_blank" class="contact-item">
+          <div class="contact-item-icon">💼</div>
+          <div><div class="contact-item-label">LinkedIn</div><div class="contact-item-value">linkedin.com/in/preyask1</div></div>
+        </a>
+        <a href="https://github.com/preyask1" target="_blank" class="contact-item">
+          <div class="contact-item-icon">⌨️</div>
+          <div><div class="contact-item-label">GitHub</div><div class="contact-item-value">github.com/preyask1</div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-name">Preyas Kulshrestha</div>
+  <div class="footer-note">TPM · AI Delivery · EMEA · APAC · AMER</div>
+</footer>
+
+<script>
+const domains = [
+  { id:'ai', icon:'◈', name:'AI & GenAI delivery', color:'ai', count:10, subtitle:'Agentic AI, RAG systems, LLM tooling, predictive governance',
+    nodes:['LangChain / LangGraph','RAG chatbots','Azure OpenAI','Azure ML','Databricks','Agentic AI programs','Predictive ML governance','Claude · Ollama','HITL reduction','GenAI use case scoping'],
+    items:[
+      {text:'Coordinated Agentic AI programs using LangChain and LangGraph, eliminating HITL steps from delivery workflows',meta:'Celebal Technologies · 2026–present'},
+      {text:'Built RAG-based chatbots consolidating fragmented documentation — retrieval from hours to under 5 minutes',meta:'Celebal Technologies · 2026–present'},
+      {text:'Won internal AI Hackathon with a CPM + ML delay-prediction system, adopted into global PMO production',meta:'PAR Technology · 2020–2026'},
+      {text:'Implemented Predictive ML governance models achieving 100% on-time delivery visibility across all programs',meta:'Celebal Technologies · 2026–present'},
+    ]},
+  { id:'delivery', icon:'◉', name:'Program & delivery', color:'delivery', count:10, subtitle:'OKR alignment, governance, CPM, 0-to-1 program builds',
+    nodes:['0-to-1 delivery','OKR alignment L1–L3','CPM modelling','RACI frameworks','Risk management','Agile / Scrum / SAFe','Budget governance','Roadmap — Aha! / Jira','Sprint facilitation','Scope & change control'],
+    items:[
+      {text:'Directed $10M+ SaaS portfolio — 4 to 6 concurrent implementations, 95% on-time delivery rate',meta:'PAR Technology · 2020–2026'},
+      {text:'Designed delivery frameworks, RACI structures, and governance models from scratch for every new client program',meta:'PAR Technology · 2020–2026'},
+      {text:'Maintained below 5% budget variance on $810K project budgets through granular burn reporting and change control',meta:'PAR Technology · 2020–2026'},
+      {text:'Built the entire IT function from scratch as first IT hire — full ERP lifecycle with zero rollback incidents',meta:'Ethnic Cotler · 2015–2020'},
+    ]},
+  { id:'client', icon:'◎', name:'Client & pre-sales', color:'client', count:7, subtitle:'Enterprise clients, SOW cycles, CSAT, discovery and scoping',
+    nodes:['Enterprise QSR clients','50+ SOW cycles','CSAT improvement','Discovery sessions','Account growth','Escalation resolution','Executive briefings'],
+    items:[
+      {text:'Served as primary stakeholder contact for global QSR enterprise clients across EMEA, APAC, and AMER',meta:'PAR Technology · 2020–2026'},
+      {text:'Contributed to 50+ SOW and proposal cycles — scoping calls, effort estimation, solution discussions',meta:'PAR Technology · 2020–2026'},
+      {text:'Improved client CSAT by 12% through consistent delivery against commitments and structured escalation resolution',meta:'PAR Technology · 2020–2026'},
+      {text:'Scoped and delivered RAG-based chatbot solutions for enterprise clients adopting GenAI for the first time',meta:'Celebal Technologies · 2026–present'},
+    ]},
+  { id:'ops', icon:'◆', name:'Operations & transformation', color:'ops', count:8, subtitle:'ERP lifecycle, supply chain, process re-engineering, digital transformation',
+    nodes:['ERP — Ginesys, SAP, Oracle','Supply chain design','Process re-engineering','Digital transformation','Lean / JIT','OSTicket implementation','Oracle PL/SQL','SQL analytics dashboards'],
+    items:[
+      {text:'Delivered full ERP lifecycle — requirements through go-live — scaling operational efficiency 150% in 6 months',meta:'Ethnic Cotler · 2015–2020'},
+      {text:'Re-engineered core workflows end-to-end, achieving 80% increase in operational throughput within 3 months',meta:'Ethnic Cotler · 2015–2020'},
+      {text:'Reduced delivery lead times by 40% by architecting a shift from bulk production to staged safety-stock model',meta:'Ethnic Cotler · 2015–2020'},
+      {text:'Implemented OSTicket from scratch — configured issue queues, routing rules, and resolution workflows',meta:'Ethnic Cotler · 2015–2020'},
+    ]},
+  { id:'leadership', icon:'◇', name:'Leadership & stakeholders', color:'leadership', count:6, subtitle:'C-suite collaboration, PM mentoring, cross-functional alignment',
+    nodes:['C-suite collaboration','10 PMs mentored','25+ member teams','4-country coordination','VP / Director alignment','Vendor management'],
+    items:[
+      {text:'Worked directly with CEO, CTO, and COO as company\'s first IT hire — all technology and program decisions',meta:'Ethnic Cotler · 2015–2020'},
+      {text:'Mentored 10 Project Managers on critical path analysis, timeline modelling, and delivery governance',meta:'PAR Technology · 2020–2026'},
+      {text:'Led resource planning for 25+ member teams across 4 countries — skill alignment and utilisation forecasting',meta:'PAR Technology · 2020–2026'},
+      {text:'Partnered with VP and Director-level stakeholders to develop program narratives and executive decision memos',meta:'PAR Technology · 2020–2026'},
+    ]}
+];
+
+let active = null;
+
+function renderDomains() {
+  const grid = document.getElementById('domainGrid');
+  grid.innerHTML = '';
+  domains.forEach(d => {
+    const card = document.createElement('div');
+    card.className = `domain-card ${d.color}${active === d.id ? ' active' : ''}`;
+    card.innerHTML = `<div class="domain-icon">${d.icon}</div><div class="domain-name">${d.name}</div><div class="domain-count">${d.count} capabilities</div><div class="node-list">${d.nodes.slice(0,4).map(n=>`<span class="node ${d.color}">${n}</span>`).join('')}${d.nodes.length>4?`<span class="node ${d.color}">+${d.nodes.length-4} more</span>`:''}</div>`;
+    card.onclick = () => { active = active === d.id ? null : d.id; renderDomains(); renderDetail(); };
+    grid.appendChild(card);
+  });
+}
+
+function renderDetail() {
+  const panel = document.getElementById('detailPanel');
+  if (!active) { panel.innerHTML = '<p class="detail-placeholder">Select a domain above to explore capabilities</p>'; return; }
+  const d = domains.find(x => x.id === active);
+  panel.innerHTML = `<h3>${d.name}</h3><div class="detail-subtitle">${d.subtitle}</div><div class="detail-nodes">${d.nodes.map(n=>`<span class="node ${d.color}">${n}</span>`).join('')}</div><div class="detail-items">${d.items.map(i=>`<div class="detail-item"><div class="detail-dot ${d.color}"></div><div><div class="detail-text">${i.text}</div><div class="detail-meta">${i.meta}</div></div></div>`).join('')}</div>`;
+  if (window.innerWidth <= 768) { panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+}
+
+function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+function toggleTheme() {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  const newTheme = isDark ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  document.getElementById('themeToggle').textContent = newTheme === 'dark' ? '🌙' : '☀️';
+  localStorage.setItem('pk-theme', newTheme);
+}
+
+(function() {
+  const saved = localStorage.getItem('pk-theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = saved || (prefersDark ? 'dark' : 'light');
+  if (theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('themeToggle');
+      if (btn) btn.textContent = '🌙';
+    });
+  }
+})();
+
+renderDomains();
+renderDetail();
+
+const reveals = document.querySelectorAll('.reveal');
+new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.08 }).observe ? reveals.forEach(el => new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } }); }, { threshold: 0.08 }).observe(el)) : reveals.forEach(el => el.classList.add('visible'));
+</script>
+</body>
+</html>
