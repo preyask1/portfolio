@@ -1335,6 +1335,31 @@
       padding: 0;
     }
 
+    .runs {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 12px;
+      padding: 14px 18px;
+      border: 1px dashed var(--line);
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+
+    .runs .cap {
+      color: var(--mute);
+      margin-right: 6px;
+    }
+
+    .pchip {
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      font-size: 13px;
+      font-weight: 400;
+    }
+
     .outcome {
       display: flex;
       flex-wrap: wrap;
@@ -2521,8 +2546,8 @@
             <li>Solo Build</li>
             <li>Production Data</li>
           </ul>
-          <p class="lead">Designed and built a shared, read-only AI agent on the Claude Agent SDK, deployed on Azure App Service.</p>
-          <div class="arch" role="img" aria-label="Architecture: 7 entry points feed an agent core with about 20 typed ports, which passes through guardrails to read-only access on 6 enterprise systems">
+          <p class="lead">Designed and built a shared, read-only AI agent on the Claude Agent SDK, deployed on Azure Container Apps.</p>
+          <div class="arch" role="img" aria-label="Architecture: 7 entry points feed an agent core with about 20 typed ports, which passes through guardrails to read-only access on 6 enterprise systems, all running on Azure Container Apps with Blob Storage, Cosmos DB and Azure Managed Redis">
             <div class="col" aria-hidden="true">
               <h4>Entry points · 7</h4>
               <ul><li>React web UI</li><li>Slack</li><li>Microsoft Teams bot</li><li>Email</li><li>MCP server</li><li>FastAPI HTTP API</li><li>33-command CLI</li></ul>
@@ -2543,6 +2568,13 @@
               <h4>Systems</h4>
               <ul><li>Jira</li><li>Microsoft Fabric</li><li>Power BI</li><li>Databricks</li><li>Azure DevOps</li><li>Azure Data Factory</li></ul>
             </div>
+          </div>
+          <div class="runs" aria-hidden="true">
+            <span class="cap">Runs on Azure</span>
+            <span class="pchip">Container Apps</span>
+            <span class="pchip">Blob Storage</span>
+            <span class="pchip">Cosmos DB</span>
+            <span class="pchip">Managed Redis</span>
           </div>
           <div class="outcome">
             <span class="cap">First 3 weeks live</span>
@@ -2566,6 +2598,7 @@
                     <li>Hexagonal core with <b>about 20 typed ports</b> and <b>15 skills</b></li>
                     <li><b>7 entry points</b>: React web UI, Slack, Microsoft Teams bot, email, MCP server, FastAPI HTTP API, 33-command CLI</li>
                     <li>Connected to Jira, Microsoft Fabric, Power BI, Databricks, Azure DevOps and Azure Data Factory</li>
+                    <li>Runs on <b>Azure Container Apps</b> with Blob Storage, Cosmos DB and Azure Managed Redis</li>
                   </ul>
                 </div>
                 <div>
@@ -2963,7 +2996,7 @@
         </div>
 
         <div class="skg rv">
-          <div class="skg-side"><span class="n tnum">15</span>
+          <div class="skg-side"><span class="n tnum">16</span>
             <h3>AI &amp; Data Delivery</h3>
           </div>
           <ol>
@@ -2982,6 +3015,7 @@
             <li>Claude Agent SDK · OpenAI API</li>
             <li>LLM Evaluation &amp; Quality Gates</li>
             <li>Entra ID · Service Principals · Secret Redaction</li>
+            <li>Azure Container Apps · Cosmos DB · Blob Storage · Managed Redis</li>
           </ol>
         </div>
 
