@@ -5,11 +5,26 @@ The personal mark of Preyas Kulshrestha. An open loop (the workflow) with an ora
 
 ## Files
 
+### Vector (SVG, any size)
+
 | File | Use |
 |---|---|
-| `in-the-loop.svg` / `in-the-loop-512.png` | Dark mark on light backgrounds |
-| `in-the-loop-white.svg` / `in-the-loop-white-512.png` | White mark on dark backgrounds |
-| `in-the-loop-avatar.svg` / `in-the-loop-avatar-1024.png` | Profile picture or social avatar (LinkedIn, GitHub) |
+| `in-the-loop.svg` | Dark mark on light backgrounds |
+| `in-the-loop-white.svg` | White mark on dark backgrounds |
+| `in-the-loop-avatar.svg` | White mark on a black square, for profile pictures |
+
+### PNG (`png/`)
+
+| Files | Background | Sizes (px) | Use |
+|---|---|---|---|
+| `in-the-loop-dark-{size}.png` | Transparent | 32, 64, 128, 256, 512, 1024, 2048 | Light documents, slides, light UIs |
+| `in-the-loop-white-{size}.png` | Transparent | 32, 64, 128, 256, 512, 1024, 2048 | Dark slides, dark UIs, photos |
+| `in-the-loop-avatar-dark-{size}.png` | Black | 512, 1024 | LinkedIn, GitHub, Slack, Teams profile picture |
+| `in-the-loop-avatar-light-{size}.png` | Off-white | 512, 1024 | Profile picture on light-themed platforms |
+| `apple-touch-icon-180.png` | Black | 180 | iPhone home-screen icon |
+
+The 32 and 64 px files use a slightly bolder stroke and a tighter crop so the mark stays legible when small.
+Avatars keep the mark well inside the square so circular crops do not clip it.
 
 The website does not load these files. Its logo and favicon are built into `index.html`.
 
