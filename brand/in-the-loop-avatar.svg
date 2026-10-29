@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="1024" height="1024">
+  <title>In the Loop · Preyas Kulshrestha</title>
+  <rect width="100" height="100" fill="#000000"/>
+  <g transform="translate(50 50) scale(0.62) translate(-50 -50)">
+    <path d="M81.17 42.8A32 32 0 1 1 57.2 18.82" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="72.63" cy="27.37" r="9" fill="#FF7A1A"/>
+  </g>
+</svg>
